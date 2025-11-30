@@ -14,6 +14,12 @@ module.exports = {
     '!server/config/database.js'
   ],
   testTimeout: 10000,
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js']
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  transformIgnorePatterns: [
+    'node_modules/(?!@xenova/transformers)'
+  ],
+  moduleNameMapper: {
+    '^@xenova/transformers$': '<rootDir>/server/__mocks__/transformers.js'
+  }
 };
 

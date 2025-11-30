@@ -18,12 +18,23 @@ describe('Authentication Routes', () => {
     role: 'customer'
   };
 
+  beforeAll(async () => {
+    // Ensure database tables exist
+    const client = await pool.connect();
+    try {
+      // Wait a moment for tables to be created (they're created on module load)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    } finally {
+      client.release();
+    }
+  });
+
   afterAll(async () => {
     // Cleanup: Remove test user if created
     if (testUserId) {
       await pool.query('DELETE FROM users WHERE id = $1', [testUserId]);
     }
-    await pool.end();
+    // Don't close pool here - let jest.setup.js handle it
   });
 
   describe('POST /api/auth/register', () => {

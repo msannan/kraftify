@@ -1,3 +1,14 @@
+// Mock @xenova/transformers before importing routes
+jest.mock('@xenova/transformers', () => ({
+  pipeline: jest.fn(() => Promise.resolve({
+    __call__: jest.fn((text) => {
+      const hash = text.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      const embedding = Array(384).fill(0).map((_, i) => (hash + i) % 100 / 100);
+      return { data: embedding };
+    })
+  }))
+}));
+
 const request = require('supertest');
 const express = require('express');
 const jobsRoutes = require('../routes/jobs');
@@ -15,6 +26,14 @@ describe('Job Routes', () => {
   let jobId;
 
   beforeAll(async () => {
+    // Ensure database tables exist
+    const client = await pool.connect();
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    } finally {
+      client.release();
+    }
+
     // Create test customer
     const customerRes = await request(app)
       .post('/api/auth/register')
@@ -37,7 +56,7 @@ describe('Job Routes', () => {
     if (customerId) {
       await pool.query('DELETE FROM users WHERE id = $1', [customerId]);
     }
-    await pool.end();
+    // Don't close pool here - let jest.setup.js handle it
   });
 
   describe('GET /api/jobs/categories', () => {

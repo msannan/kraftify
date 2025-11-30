@@ -1,17 +1,18 @@
+// Mock @xenova/transformers before importing
+jest.mock('@xenova/transformers', () => ({
+  pipeline: jest.fn(() => Promise.resolve({
+    __call__: jest.fn((text) => {
+      // Mock embedding: simple hash-based embedding for testing
+      const hash = text.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      const embedding = Array(384).fill(0).map((_, i) => (hash + i) % 100 / 100);
+      return { data: embedding };
+    })
+  }))
+}));
+
 const { calculateSemanticSimilarity, cosineSimilarity } = require('../utils/semanticMatching');
 
 describe('Semantic Matching', () => {
-  // Mock the pipeline to avoid loading the actual model in tests
-  jest.mock('@xenova/transformers', () => ({
-    pipeline: jest.fn(() => Promise.resolve({
-      __call__: jest.fn((text) => {
-        // Mock embedding: simple hash-based embedding for testing
-        const hash = text.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-        const embedding = Array(384).fill(0).map((_, i) => (hash + i) % 100 / 100);
-        return { data: embedding };
-      })
-    }))
-  }));
 
   test('cosineSimilarity should return 1 for identical vectors', () => {
     const vec1 = [1, 0, 0];
