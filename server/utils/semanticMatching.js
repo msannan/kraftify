@@ -1,5 +1,3 @@
-const { pipeline } = require('@xenova/transformers');
-
 // Cache the model to avoid reloading
 let modelCache = null;
 let tokenizerCache = null;
@@ -7,6 +5,7 @@ let tokenizerCache = null;
 /**
  * Initialize the sentence transformer model
  * Uses a lightweight model that runs locally
+ * Uses dynamic import() for ES module compatibility
  */
 async function initializeModel() {
   if (modelCache && tokenizerCache) {
@@ -15,6 +14,9 @@ async function initializeModel() {
 
   try {
     console.log('🔄 Loading semantic matching model...');
+    // Use dynamic import() for ES module compatibility
+    const { pipeline } = await import('@xenova/transformers');
+    
     const pipe = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', {
       quantized: true, // Use quantized model for faster loading
     });
