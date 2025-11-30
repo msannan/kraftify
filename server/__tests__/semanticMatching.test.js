@@ -40,6 +40,7 @@ describe('Semantic Matching - Cosine Similarity', () => {
     const vec1 = [1, 1, 0];
     const vec2 = [1, 1, 0];
     const result = cosineSimilarity(vec1, vec2);
-    expect(result).toBe(1);
+    // Use toBeCloseTo for floating point comparison
+    expect(result).toBeCloseTo(1, 10);
   });
 });
