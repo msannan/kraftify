@@ -27,6 +27,7 @@ interface Education {
 
 export default function ProfilePage() {
   const router = useRouter()
+  const { showToast } = useToast()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)

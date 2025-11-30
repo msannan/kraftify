@@ -159,7 +159,7 @@ export default function SearchPage() {
                     <div className="mt-4 flex items-center">
                       <span className="text-yellow-400">★</span>
                       <span className="ml-1 text-gray-700 font-medium">
-                        {parseFloat(person.average_rating).toFixed(1)}
+                        {typeof person.average_rating === 'number' ? person.average_rating.toFixed(1) : parseFloat(String(person.average_rating || 0)).toFixed(1)}
                       </span>
                       <span className="ml-1 text-gray-500">
                         ({person.total_reviews} reviews)

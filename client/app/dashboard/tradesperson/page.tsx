@@ -13,6 +13,7 @@ interface User {
   firstName: string
   lastName: string
   profile?: any
+  created_at?: string
 }
 
 interface Booking {

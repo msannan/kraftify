@@ -17,6 +17,7 @@ interface Job {
   status: string
   category_name: string
   category_icon: string
+  customer_id?: number
   first_name: string
   last_name: string
   email: string
@@ -30,7 +31,7 @@ interface Job {
   required_skills: string[]
   images: string[]
   contact_preference: string
-  bids: Bid[]
+  bids?: Bid[]
 }
 
 interface Bid {
@@ -432,7 +433,7 @@ export default function JobDetailPage() {
                   )}
 
                   <button
-                    onClick={() => startConversation(job.customer_id)}
+                    onClick={() => job.customer_id && startConversation(job.customer_id)}
                     className="px-6 py-2 border border-primary-600 text-primary-600 rounded-md hover:bg-primary-50"
                   >
                     Message Customer
