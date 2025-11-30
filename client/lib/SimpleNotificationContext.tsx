@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { io, Socket } from 'socket.io-client'
+import { getSocketUrl } from './config'
 
 interface SimpleNotification {
   id: string
@@ -33,7 +34,7 @@ export function SimpleNotificationProvider({ children, userId }: { children: Rea
 
     console.log('🔌 Connecting to socket for user:', userId)
     
-    const newSocket = io('http://localhost:5001', {
+    const newSocket = io(getSocketUrl(), {
       transports: ['websocket'],
       forceNew: true
     })
