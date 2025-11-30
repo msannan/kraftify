@@ -70,8 +70,8 @@ sudo -u postgres psql
 
 # In PostgreSQL prompt:
 CREATE DATABASE kraftify;
-CREATE USER kraftify_user WITH PASSWORD 'your_secure_password';
-GRANT ALL PRIVILEGES ON DATABASE kraftify TO kraftify_user;
+CREATE USER msannan WITH PASSWORD 'postgres';
+GRANT ALL PRIVILEGES ON DATABASE kraftify TO msannan;
 \q
 ```
 
