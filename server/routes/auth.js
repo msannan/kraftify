@@ -70,7 +70,16 @@ router.post('/register', [
     });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ error: 'Server error during registration' });
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code,
+      detail: error.detail
+    });
+    res.status(500).json({ 
+      error: 'Server error during registration',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 });
 

@@ -124,8 +124,8 @@ io.on('connection', (socket) => {
 app.set('io', io);
 app.set('connectedUsers', connectedUsers);
 
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT} (accessible from all interfaces)`);
 });
 
 module.exports = { app, pool, io, connectedUsers };
