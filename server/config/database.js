@@ -313,5 +313,8 @@ const createTables = async () => {
 // Run table creation on module load
 createTables();
 
+// Export both pool and createTables for backward compatibility
 module.exports = pool;
+module.exports.pool = pool;
+module.exports.createTables = createTables;
 
