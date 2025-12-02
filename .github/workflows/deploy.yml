@@ -17,7 +17,7 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -i key.pem-o StrictHostKeyChecking=no ubuntu@35.89.52.162 << 'ENDSSH'
+          ssh -i key.pem -o StrictHostKeyChecking=no ubuntu@35.89.52.162 << 'ENDSSH'
             set -e
             cd /home/ubuntu/kraftify
             
