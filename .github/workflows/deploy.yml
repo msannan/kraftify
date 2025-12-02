@@ -1,0 +1,40 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+
+      - name: Deploy to EC2
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          ssh -i $SSH_KEY -o StrictHostKeyChecking=no ubuntu@35.89.52.162 << 'ENDSSH'
+            set -e
+            cd /home/ubuntu/kraftify
+            
+            echo "Pulling latest code..."
+            git pull origin main
+            
+            echo "Installing dependencies..."
+            npm install
+            
+            echo "Building frontend..."
+            cd client
+            npm install
+            npm run build
+            cd ..
+            
+            echo "Restarting services..."
+            pm2 restart kraftify-backend
+            pm2 restart kraftify-frontend
+            
+            echo "Deployment complete!"
+            pm2 status
+          ENDSSH

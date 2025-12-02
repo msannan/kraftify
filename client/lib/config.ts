@@ -14,12 +14,12 @@ export const getApiBaseUrl = (): string => {
     
     // If accessing via IP or domain (not localhost), use same host with port 5001
     if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
-      return `${protocol}//${hostname}:5001`;
+      return `${protocol}//${hostname}:5001/api`;
     }
   }
   
   // Default to localhost for development
-  return 'http://localhost:5001';
+  return 'http://localhost:5001/api';
 };
 
 export const getSocketUrl = (): string => {
