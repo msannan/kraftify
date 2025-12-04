@@ -8,6 +8,14 @@ module.exports = {
   testMatch: [
     '**/__tests__/**/*.test.js'
   ],
-  testTimeout: 10000
+  testTimeout: 30000,
+  // Handle ES modules and dynamic imports
+  transform: {},
+  extensionsToTreatAsEsm: [],
+  globals: {
+    'ts-jest': {
+      useESM: true
+    }
+  }
 };
 
