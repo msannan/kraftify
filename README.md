@@ -141,14 +141,3 @@ A digital marketplace platform designed to help skilled workers (tradespeople) b
 - [ ] Admin dashboard
 - [ ] Mobile app (future)
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT License
-
-## Support
-
-For support, email support@kraftify.com or open an issue in the repository.
